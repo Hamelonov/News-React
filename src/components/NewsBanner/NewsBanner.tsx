@@ -1,8 +1,8 @@
 import styles from './styles.module.css'
-import {formatTimeAgo} from "../../helpers/formatTimeAgo.js";
-import Image from "../Image/index.js";
+import {formatTimeAgo} from "../../helpers/formatTimeAgo"
+import Image from "../Image"
 
-const NewsBanner = ({item}) => {
+const NewsBanner = ({item}:any) => {
   return (
     <div className={styles.NewsBanner}>
       <Image image={item?.image} />

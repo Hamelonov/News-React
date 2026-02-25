@@ -1,9 +1,9 @@
 import styles from './styles.module.css'
-import NewsBanner from "../../components/NewsBanner/NewsBanner.jsx";
-import {useEffect, useState} from "react";
-import {getNews} from "../../api/apiNews.js";
-import NewsList from "../../components/NewsList/NewsList.jsx";
-import Skeleton from "../../components/Skeleton/Skeleton.tsx";
+import NewsBanner from "../../components/NewsBanner/NewsBanner"
+import {useEffect, useState} from "react"
+import {getNews} from "../../api/apiNews"
+import NewsList from "../../components/NewsList/NewsList"
+import Skeleton from "../../components/Skeleton/Skeleton"
 
 const Main = () => {
   const [newsList, setNewsList] = useState([])

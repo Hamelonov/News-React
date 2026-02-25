@@ -1,4 +1,4 @@
-export const formatDate = (date) => {
+export const formatDate = (date:any) => {
   const options = {
     year: 'numeric',
     month: 'long',
