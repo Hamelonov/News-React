@@ -1,7 +1,7 @@
 import styles from './styles.module.css'
-import NewsItem from "../NewsItem/NewsItem.jsx";
+import NewsItem from "../NewsItem/NewsItem"
 
-const NewsList = ({articles}) => {
+const NewsList = ({articles}:any) => {
   return (
     <ul className={styles.list}>
       {articles.map(article => (
