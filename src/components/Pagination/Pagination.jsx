@@ -7,7 +7,7 @@ const Pagination = (
     handleNextPage,
     handlePreviousPage,
     handlePageClick
-  }: any
+  }
 ) => {
   return (
     <div className={styles.pagination}>

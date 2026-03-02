@@ -1,5 +1,5 @@
-import Header from "./components/Header/Header";
-import Main from "./pages/Main/Main";
+import Header from "./components/Header/Header.jsx";
+import Main from "./pages/Main/Main.jsx";
 
 const App = () => {
   return (
