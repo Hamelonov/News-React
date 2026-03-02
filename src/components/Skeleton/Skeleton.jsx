@@ -1,12 +1,6 @@
 import styles from './styles.module.css'
-import type {FC} from "react";
 
-interface Props {
-  count?: number,
-  type?: string,
-}
-
-const Skeleton:FC<Props> = ({count = 1, type = 'banner'}) => {
+const Skeleton = ({count = 1, type = 'banner'}) => {
   return (
     <>
       {count > 1 ? (
