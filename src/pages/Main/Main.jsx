@@ -5,13 +5,17 @@ import {getNews} from "../../api/apiNews.js"
 import NewsList from "../../components/NewsList/NewsList.jsx"
 import Skeleton from "../../components/Skeleton/Skeleton.jsx"
 import Pagination from "../../components/Pagination/Pagination.jsx"
-import Categories from "../../components/Categories/Categories.jsx";
+import Categories from "../../components/Categories/Categories.jsx"
+import Search from "../../components/Search/Search.jsx"
+import {useDebounce} from "../../hooks/useDebounce.js";
 
 const Main = () => {
   const [newsList, setNewsList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [keywords, setKeywords] = useState('')
+  // Сколько запросить статей при начальной загрузки приложения
   const totalPages = 10
   const pageSize = 10
 
@@ -26,6 +30,8 @@ const Main = () => {
     "technology",
   ]
 
+  const debouncedKeywords = useDebounce(keywords, 1500)
+
   const fetchNews = async (currentPage) => {
     try {
       setIsLoading(true)
@@ -34,15 +40,17 @@ const Main = () => {
       if (selectedCategory === 'all') {
         newsData = await getNews('/everything', {
           sources: 'the-verge',
+          q: keywords,
           page: 1,
-          pageSize: 10,
+          pageSize: pageSize,
         })
       } else {
         newsData = await getNews('/top-headlines', {
           category: selectedCategory,
           language: 'en',
+          q: keywords,
           page: 1,
-          pageSize: 10,
+          pageSize: pageSize,
         })
       }
 
@@ -56,7 +64,7 @@ const Main = () => {
 
   useEffect(() => {
     fetchNews(currentPage)
-  }, [currentPage, selectedCategory])
+  }, [currentPage, selectedCategory, debouncedKeywords])
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -80,6 +88,11 @@ const Main = () => {
         categories={CATEGORIES}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
+      />
+
+      <Search
+        keywords={keywords}
+        setKeywords={setKeywords}
       />
 
       {newsList.length > 0 && !isLoading
