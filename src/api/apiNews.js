@@ -10,12 +10,6 @@ const newsApi = axios.create({
   }
 })
 
-/**
- * Универсальная функция запроса
- * @param {string} endpoint - путь (например, '/everything' или '/top-headlines')
- * @param {Object} params - любые дополнительные параметры (q, category, page и т.д.)
- * */
-
 export const getNews = async (endpoint, params = {}) => {
   try {
     const response = await newsApi.get(endpoint, {params})
