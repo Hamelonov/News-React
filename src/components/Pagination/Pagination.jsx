@@ -22,7 +22,7 @@ const Pagination = (
           <button
             onClick={() => handlePageClick(index + 1)}
             className={styles.pageNumber}
-            disabled={index + 1 == currentPage}
+            disabled={index + 1 === currentPage}
             key={index}
             type="button"
           >{index + 1}</button>
