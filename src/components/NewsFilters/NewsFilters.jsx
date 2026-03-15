@@ -1,5 +1,5 @@
 import styles from './styles.module.css'
-import {CATEGORIES, TOTAL_PAGES} from "../../constants/constants.js"
+import {CATEGORIES} from "../../constants/constants.js"
 import Search from "../Search/Search.jsx"
 import Categories from "../Categories/Categories.jsx"
 
