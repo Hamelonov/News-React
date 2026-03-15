@@ -1,15 +1,12 @@
 import styles from './styles.module.css'
 import {useEffect, useMemo} from "react"
 import {getNews} from "../../api/apiNews"
-import Pagination from "../../components/Pagination/Pagination"
-import Categories from "../../components/Categories/Categories"
-import Search from "../../components/Search/Search"
 import {useDebounce} from "../../hooks/useDebounce"
-import {PAGE_SIZE, TOTAL_PAGES, CATEGORIES, ENDPOINTS} from "../../constants/constants"
-import NewsListWithSkeleton from "../../components/NewsList/NewsList"
-import NewsBannerWithSkeleton from "../../components/NewsBanner/NewsBanner"
+import {PAGE_SIZE, CATEGORIES, ENDPOINTS} from "../../constants/constants"
 import {useFetch} from "../../hooks/useFetch"
 import {useFilters} from "../../hooks/useFilters.js";
+import LatestNews from "../../components/LatestNews/LatestNews.jsx";
+import NewsByFilters from "../../components/NewsByFilters/NewsByFilters.jsx";
 
 const Main = () => {
   const {filters, changeFilter} = useFilters({
@@ -20,6 +17,11 @@ const Main = () => {
   })
 
   const debouncedKeywords = useDebounce(filters.keywords, 1500)
+
+  // Возвращает на начальную страницу при изменении категории или строки поиска
+  useEffect(() => {
+    changeFilter('currentPage', 1)
+  }, [filters.selectedCategory, debouncedKeywords]);
 
   const endpoint = filters.selectedCategory === CATEGORIES[0] ? ENDPOINTS.everything : ENDPOINTS.categories
   const params = useMemo(() => ({
@@ -34,66 +36,19 @@ const Main = () => {
   }), [debouncedKeywords, filters.currentPage, filters.selectedCategory])
 
   const {data: newsData, isLoading} = useFetch(getNews, endpoint, params)
-  const newsList = newsData || []
-
-  // Возвращает на начальную страницу при изменении категории или строки поиска
-  useEffect(() => {
-    changeFilter('currentPage', 1)
-  }, [filters.selectedCategory, debouncedKeywords]);
-
-  const handleNextPage = () => {
-    if (filters.currentPage < TOTAL_PAGES) {
-      changeFilter('currentPage', filters.currentPage + 1)
-    }
-  }
-
-  const handlePreviousPage = () => {
-    if (filters.currentPage > 1) {
-      changeFilter('currentPage', filters.currentPage - 1)
-    }
-  }
-
-  const handlePageClick = (pageNumber) => {
-    changeFilter('currentPage', pageNumber)
-  }
 
   return (
     <div className={styles.main}>
-      <Categories
-        categories={CATEGORIES}
-        selectedCategory={filters.selectedCategory}
-        setSelectedCategory={(category) => changeFilter('selectedCategory', category)}
-      />
-
-      <Search
-        keywords={filters.keywords}
-        setKeywords={(keywords) => changeFilter('keywords', keywords)}
-      />
-
-      <NewsBannerWithSkeleton
+      <LatestNews
         isLoading={isLoading}
-        item={newsList[0] || null}
+        banners={newsData}
       />
 
-      <Pagination
-        handleNextPage={handleNextPage}
-        handlePreviousPage={handlePreviousPage}
-        handlePageClick={handlePageClick}
-        totalPages={TOTAL_PAGES}
-        currentPage={filters.currentPage}
-      />
-
-      <NewsListWithSkeleton
+      <NewsByFilters
+        news={newsData}
         isLoading={isLoading}
-        articles={newsList}
-      />
-
-      <Pagination
-        handleNextPage={handleNextPage}
-        handlePreviousPage={handlePreviousPage}
-        handlePageClick={handlePageClick}
-        totalPages={TOTAL_PAGES}
-        currentPage={filters.currentPage}
+        filters={filters}
+        changeFilter={changeFilter}
       />
     </div>
   )
