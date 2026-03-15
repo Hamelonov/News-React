@@ -1,10 +1,10 @@
 import styles from './styles.module.css'
 
-const Skeleton = ({count = 1, type = 'banner'}) => {
+const Skeleton = ({count = 1, type = 'banner', direction = 'column'}) => {
   return (
     <>
       {count > 1 ? (
-        <div className={styles.list}>
+        <div className={direction === 'column' ? styles.columnList : styles.rowList}>
           {[...Array(count)].map((_, index) => (
             <div
               key={index}
