@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState} from "react"
 
 export const useFetch = (fetchFunction, endpoint, queryParams) => {
   const [data, setData] = useState(null)
@@ -15,7 +15,7 @@ export const useFetch = (fetchFunction, endpoint, queryParams) => {
         setIsLoading(true)
         const result = await fetchFunction(endpoint, queryParams)
 
-        if (isMounted) setData(result);
+        if (isMounted) setData(result)
       } catch (error) {
         if (isMounted) setError(error)
       } finally {
