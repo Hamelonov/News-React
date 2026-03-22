@@ -1,9 +1,9 @@
 import axios from "axios"
 
-const BASE_URL = import.meta.env.VITE_NEWS_BASE_API_URL
+const BASE_URL = import.meta.env.VITE_NEWS_API_BASE_URL
 const API_KEY = import.meta.env.VITE_NEWS_API_KEY
 
-const newsApi = axios.create({
+const newsAPI = axios.create({
   baseURL: BASE_URL,
   params: {
     apiKey: API_KEY
@@ -12,7 +12,7 @@ const newsApi = axios.create({
 
 export const getNews = async (endpoint, params = {}) => {
   try {
-    const response = await newsApi.get(endpoint, {params})
+    const response = await newsAPI.get(endpoint, {params})
 
     return response.data.articles?.map((article) => ({
       ...article,
