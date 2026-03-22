@@ -1,16 +1,24 @@
-import styles from './styles.module.css'
-import {CATEGORIES} from "../../constants/constants.js"
-import Search from "../Search/Search.jsx"
-import Categories from "../Categories/Categories.jsx"
+import { CATEGORIES } from '../../constants/constants.js'
 
-const NewsFilters = ({filters, changeFilter}) => {
+import Categories from '../Categories/Categories.jsx'
+import Search from '../Search/Search.jsx'
+import Slider from '../Slider/Slider.jsx'
+import styles from './styles.module.css'
+
+const NewsFilters = ({ filters, changeFilter }) => {
   return (
     <div className={styles.filters}>
-      {CATEGORIES && <Categories
-        categories={CATEGORIES}
-        selectedCategory={filters.currentCategory}
-        setSelectedCategory={(category) => changeFilter('currentCategory', category)}
-      />}
+      {CATEGORIES && (
+        <Slider>
+          <Categories
+            categories={CATEGORIES}
+            selectedCategory={filters.currentCategory}
+            setSelectedCategory={(category) =>
+              changeFilter('currentCategory', category)
+            }
+          />
+        </Slider>
+      )}
 
       <Search
         keywords={filters.keywords}
