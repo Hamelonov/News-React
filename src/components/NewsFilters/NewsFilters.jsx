@@ -8,8 +8,8 @@ const NewsFilters = ({filters, changeFilter}) => {
     <div className={styles.filters}>
       {CATEGORIES && <Categories
         categories={CATEGORIES}
-        selectedCategory={filters.selectedCategory}
-        setSelectedCategory={(category) => changeFilter('selectedCategory', category)}
+        selectedCategory={filters.currentCategory}
+        setSelectedCategory={(category) => changeFilter('currentCategory', category)}
       />}
 
       <Search
