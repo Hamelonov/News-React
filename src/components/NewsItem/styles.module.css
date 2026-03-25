@@ -23,7 +23,9 @@
   width: 64px;
   height: 64px;
   background-color: #f2f4f5;
-  background-position: center;
-  background-size: cover;
   flex-shrink: 0;
+}
+
+.image {
+  height: 100%;
 }
