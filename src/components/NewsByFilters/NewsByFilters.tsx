@@ -8,7 +8,7 @@ import { useDebounce } from '@/hooks/useDebounce.ts'
 import { useFetch } from '@/hooks/useFetch.ts'
 import { useFilters } from '@/hooks/useFilters.ts'
 
-import { CATEGORIES } from '@/constants/constants.ts'
+import { CATEGORIES, PAGE_SIZE } from '@/constants/constants.ts'
 
 import NewsFilters from '../NewsFilters/NewsFilters'
 import NewsList from '../NewsList/NewsList'
@@ -33,15 +33,17 @@ const NewsByFilters = () => {
     useMemo((): ITopHeadlinesEndpointParams => {
       return {
         q: debouncedKeywords,
-        pageSize: 10,
+        pageSize: PAGE_SIZE,
         page: filters.currentPage,
         category: filters.currentCategory,
       }
     }, [debouncedKeywords, filters.currentPage, filters.currentCategory]),
   )
 
+  const totalPages = Math.ceil((data?.totalResults ?? 0) / PAGE_SIZE)
+
   const handleNextPage = (): void => {
-    if (filters.currentPage < 10) {
+    if (filters.currentPage < totalPages) {
       changeFilter('currentPage', filters.currentPage + 1)
     }
   }
@@ -71,7 +73,7 @@ const NewsByFilters = () => {
         handleNextPage={handleNextPage}
         handlePreviousPage={handlePreviousPage}
         handlePageClick={handlePageClick}
-        totalPages={10}
+        totalPages={totalPages}
         currentPage={filters.currentPage}
       />
 
@@ -81,7 +83,7 @@ const NewsByFilters = () => {
         handleNextPage={handleNextPage}
         handlePreviousPage={handlePreviousPage}
         handlePageClick={handlePageClick}
-        totalPages={10}
+        totalPages={totalPages}
         currentPage={filters.currentPage}
       />
     </section>
