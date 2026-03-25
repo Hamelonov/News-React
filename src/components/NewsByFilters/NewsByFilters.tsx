@@ -1,12 +1,14 @@
+import { ITopHeadlinesEndpointParams, NewsApiResponse } from '@/interfaces'
+
 import { memo, useEffect, useMemo } from 'react'
 
-import { getNews } from '../../api/apiNews'
+import { getNews } from '@/api/apiNews.ts'
 
-import { useDebounce } from '../../hooks/useDebounce'
-import { useFetch } from '../../hooks/useFetch'
-import { useFilters } from '../../hooks/useFilters'
+import { useDebounce } from '@/hooks/useDebounce.ts'
+import { useFetch } from '@/hooks/useFetch.ts'
+import { useFilters } from '@/hooks/useFilters.ts'
 
-import { CATEGORIES } from '../../constants/constants'
+import { CATEGORIES } from '@/constants/constants.ts'
 
 import NewsFilters from '../NewsFilters/NewsFilters'
 import NewsList from '../NewsList/NewsList'
@@ -22,41 +24,44 @@ const NewsByFilters = () => {
 
   const debouncedKeywords = useDebounce(filters.keywords, 1500)
 
-  // Возвращает на начальную страницу при изменении категории или строки поиска
-  useEffect(() => {
-    if (filters.currentPage !== 1) {
-      changeFilter('currentPage', 1)
-    }
-  }, [filters.currentCategory, debouncedKeywords])
-
-  const { data, isLoading } = useFetch(
+  const { data, isLoading } = useFetch<
+    NewsApiResponse,
+    ITopHeadlinesEndpointParams
+  >(
     getNews,
     '/top-headlines',
-    useMemo(() => {
+    useMemo((): ITopHeadlinesEndpointParams => {
       return {
         q: debouncedKeywords,
-        page: filters.currentPage,
         pageSize: 10,
+        page: filters.currentPage,
         category: filters.currentCategory,
       }
     }, [debouncedKeywords, filters.currentPage, filters.currentCategory]),
   )
 
-  const handleNextPage = () => {
+  const handleNextPage = (): void => {
     if (filters.currentPage < 10) {
       changeFilter('currentPage', filters.currentPage + 1)
     }
   }
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = (): void => {
     if (filters.currentPage > 1) {
       changeFilter('currentPage', filters.currentPage - 1)
     }
   }
 
-  const handlePageClick = (pageNumber) => {
+  const handlePageClick = (pageNumber: number): void => {
     changeFilter('currentPage', pageNumber)
   }
+
+  // ===== Возвращает на начальную страницу при изменении категории или строки поиска =====
+  useEffect(() => {
+    if (filters.currentPage !== 1) {
+      changeFilter('currentPage', 1)
+    }
+  }, [filters.currentCategory, debouncedKeywords])
 
   return (
     <section className={styles.section}>
@@ -70,7 +75,7 @@ const NewsByFilters = () => {
         currentPage={filters.currentPage}
       />
 
-      <NewsList isLoading={isLoading} articles={data} />
+      <NewsList isLoading={isLoading} articles={data?.articles} />
 
       <Pagination
         handleNextPage={handleNextPage}
