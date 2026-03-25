@@ -1,11 +1,18 @@
-import { CATEGORIES } from '../../constants/constants.js'
+import { IFilters } from '@/interfaces'
 
-import Categories from '../Categories/Categories.jsx'
-import Search from '../Search/Search.jsx'
-import Slider from '../Slider/Slider.jsx'
+import { CATEGORIES } from '@/constants/constants.ts'
+
+import Categories from '../Categories/Categories.tsx'
+import Search from '../Search/Search.tsx'
+import Slider from '../Slider/Slider.tsx'
 import styles from './styles.module.css'
 
-const NewsFilters = ({ filters, changeFilter }) => {
+interface Props {
+  filters: IFilters
+  changeFilter: (key: string, value: string | number | null) => void
+}
+
+const NewsFilters = ({ filters, changeFilter }: Props) => {
   return (
     <div className={styles.filters}>
       {CATEGORIES && (

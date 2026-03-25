@@ -1,4 +1,5 @@
-import {formatDate} from "../../helpers/formatDate"
+import { formatDate } from '@/helpers/formatDate'
+
 import styles from './styles.module.css'
 
 const Header = () => {
