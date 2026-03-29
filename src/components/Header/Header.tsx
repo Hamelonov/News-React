@@ -18,6 +18,7 @@ const Header = () => {
       </div>
 
       <img
+        className={styles.themeButton}
         src={isDark ? themeIcons.dark : themeIcons.light}
         alt="theme"
         width="30"
