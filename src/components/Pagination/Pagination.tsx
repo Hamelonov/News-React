@@ -1,3 +1,5 @@
+import { useTheme } from '@/context/ThemeContext.tsx'
+
 import styles from './styles.module.css'
 
 interface Props {
@@ -8,20 +10,6 @@ interface Props {
   handlePageClick: (page: number) => void
 }
 
-const getVisiblePages = (current: number, total: number) => {
-  if (total <= 7) return [...Array(total)].map((_, i) => i + 1)
-
-  if (current <= 4) {
-    return [1, 2, 3, 4, 5, '...', total]
-  }
-
-  if (current >= total - 3) {
-    return [1, '...', total - 4, total - 3, total - 2, total - 1, total]
-  }
-
-  return [1, '...', current - 1, current, current + 1, '...', total]
-}
-
 const Pagination = ({
   currentPage,
   totalPages,
@@ -29,10 +17,14 @@ const Pagination = ({
   handlePreviousPage,
   handlePageClick,
 }: Props) => {
+  const { isDark } = useTheme()
+
   const pages = getVisiblePages(currentPage, totalPages)
 
   return (
-    <div className={styles.pagination}>
+    <div
+      className={`${styles.pagination} ${isDark ? styles.dark : styles.light}`}
+    >
       <button
         onClick={handlePreviousPage}
         disabled={currentPage <= 1}
@@ -69,6 +61,20 @@ const Pagination = ({
       </button>
     </div>
   )
+}
+
+const getVisiblePages = (current: number, total: number) => {
+  if (total <= 7) return [...Array(total)].map((_, i) => i + 1)
+
+  if (current <= 4) {
+    return [1, 2, 3, 4, 5, '...', total]
+  }
+
+  if (current >= total - 3) {
+    return [1, '...', total - 4, total - 3, total - 2, total - 1, total]
+  }
+
+  return [1, '...', current - 1, current, current + 1, '...', total]
 }
 
 export default Pagination
