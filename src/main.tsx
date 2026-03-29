@@ -1,3 +1,5 @@
+import { ThemeProvider } from '@/context/ThemeContext.tsx'
+
 import { createRoot } from 'react-dom/client'
 
 import App from './App.tsx'
@@ -12,4 +14,8 @@ if (!rootElement) {
   )
 }
 
-createRoot(rootElement).render(<App />)
+createRoot(rootElement).render(
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>,
+)
