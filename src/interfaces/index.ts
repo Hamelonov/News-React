@@ -10,9 +10,9 @@ export interface INews {
 }
 
 export interface IFilters {
-  currentPage: number
-  pageSize?: number
-  currentCategory: CategoriesType | null
+  page: number
+  pageSize: number
+  category: CategoriesType | null
   keywords: string
 }
 
@@ -24,7 +24,7 @@ export interface IEverythingEndpointParams {
   to?: string
   language?: LanguageCodeType
   sortBy?: SortByType
-  pageSize: number
+  pageSize?: number
   page?: number
 }
 
@@ -33,7 +33,7 @@ export interface ITopHeadlinesEndpointParams {
   category?: CategoriesType | null
   sources?: string
   q?: string
-  pageSize: number
+  pageSize?: number
   page?: number
 }
 

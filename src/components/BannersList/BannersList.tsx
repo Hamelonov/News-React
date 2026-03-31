@@ -12,8 +12,8 @@ interface Props {
 const BannersList = ({ banners }: Props) => {
   return (
     <ul className={styles.banners}>
-      {banners?.map((banner) => (
-        <NewsBanner key={banner.id} item={banner} />
+      {banners?.map((banner, index) => (
+        <NewsBanner key={index} item={banner} />
       ))}
     </ul>
   )
