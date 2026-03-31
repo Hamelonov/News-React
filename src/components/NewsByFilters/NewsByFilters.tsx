@@ -1,14 +1,10 @@
-import { ITopHeadlinesEndpointParams, NewsApiResponse } from '@/interfaces'
+import { useAppDispatch, useAppSelector } from '@/store'
+import { useGetNewsFromTopHeadlinesQuery } from '@/store/services/newsApi.ts'
+import { setFilters } from '@/store/slices/newsSlice.ts'
 
-import { memo, useEffect, useMemo } from 'react'
-
-import { getNews } from '@/api/apiNews.ts'
+import { memo, useEffect } from 'react'
 
 import { useDebounce } from '@/hooks/useDebounce.ts'
-import { useFetch } from '@/hooks/useFetch.ts'
-import { useFilters } from '@/hooks/useFilters.ts'
-
-import { CATEGORIES, PAGE_SIZE } from '@/constants/constants.ts'
 
 import NewsFilters from '../NewsFilters/NewsFilters'
 import NewsList from '../NewsList/NewsList'
@@ -16,65 +12,54 @@ import Pagination from '../Pagination/Pagination'
 import styles from './styles.module.css'
 
 const NewsByFilters = () => {
-  const { filters, changeFilter } = useFilters({
-    currentPage: 1,
-    currentCategory: CATEGORIES[0],
-    keywords: '',
-  })
+  const filters = useAppSelector((state) => state.news.filters)
+  const dispatch = useAppDispatch()
 
   const debouncedKeywords = useDebounce(filters.keywords, 1500)
 
-  const { data, isLoading } = useFetch<
-    NewsApiResponse,
-    ITopHeadlinesEndpointParams
-  >(
-    getNews,
-    '/top-headlines',
-    useMemo((): ITopHeadlinesEndpointParams => {
-      return {
-        q: debouncedKeywords,
-        pageSize: PAGE_SIZE,
-        page: filters.currentPage,
-        category: filters.currentCategory,
-      }
-    }, [debouncedKeywords, filters.currentPage, filters.currentCategory]),
-  )
+  const { data, isLoading } = useGetNewsFromTopHeadlinesQuery({
+    q: debouncedKeywords,
+    pageSize: filters.pageSize,
+    page: filters.page,
+    category: filters.category,
+  })
 
-  const totalPages = Math.ceil((data?.totalResults ?? 0) / PAGE_SIZE)
+  const totalPages = Math.ceil((data?.totalResults ?? 0) / filters.pageSize)
 
   const handleNextPage = (): void => {
-    if (filters.currentPage < totalPages) {
-      changeFilter('currentPage', filters.currentPage + 1)
+    if (filters.page < totalPages) {
+      dispatch(setFilters({ key: 'page', value: filters.page + 1 }))
     }
   }
 
   const handlePreviousPage = (): void => {
-    if (filters.currentPage > 1) {
-      changeFilter('currentPage', filters.currentPage - 1)
+    if (filters.page > 1) {
+      dispatch(setFilters({ key: 'page', value: filters.page - 1 }))
     }
   }
 
   const handlePageClick = (pageNumber: number): void => {
-    changeFilter('currentPage', pageNumber)
+    dispatch(setFilters({ key: 'page', value: pageNumber }))
   }
 
   // ===== Возвращает на начальную страницу при изменении категории или строки поиска =====
   useEffect(() => {
-    if (filters.currentPage !== 1) {
-      changeFilter('currentPage', 1)
+    if (filters.page !== 1) {
+      dispatch(setFilters({ key: 'page', value: 1 }))
     }
-  }, [filters.currentCategory, debouncedKeywords])
+  }, [filters.category, debouncedKeywords])
+  // ======================================================================================
 
   return (
     <section className={styles.section}>
-      <NewsFilters filters={filters} changeFilter={changeFilter} />
+      <NewsFilters filters={filters} />
 
       <Pagination
         handleNextPage={handleNextPage}
         handlePreviousPage={handlePreviousPage}
         handlePageClick={handlePageClick}
         totalPages={totalPages}
-        currentPage={filters.currentPage}
+        currentPage={filters.page}
       />
 
       <NewsList isLoading={isLoading} articles={data?.articles} />
@@ -84,7 +69,7 @@ const NewsByFilters = () => {
         handlePreviousPage={handlePreviousPage}
         handlePageClick={handlePageClick}
         totalPages={totalPages}
-        currentPage={filters.currentPage}
+        currentPage={filters.page}
       />
     </section>
   )

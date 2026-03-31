@@ -1,4 +1,6 @@
 import { IFilters } from '@/interfaces'
+import { useAppDispatch } from '@/store'
+import { setFilters } from '@/store/slices/newsSlice.ts'
 
 import { CATEGORIES } from '@/constants/constants.ts'
 
@@ -9,19 +11,20 @@ import styles from './styles.module.css'
 
 interface Props {
   filters: IFilters
-  changeFilter: (key: string, value: string | number | null) => void
 }
 
-const NewsFilters = ({ filters, changeFilter }: Props) => {
+const NewsFilters = ({ filters }: Props) => {
+  const dispatch = useAppDispatch()
+
   return (
     <div className={styles.filters}>
       {CATEGORIES && (
         <Slider>
           <Categories
             categories={CATEGORIES}
-            selectedCategory={filters.currentCategory}
+            selectedCategory={filters.category}
             setSelectedCategory={(category) =>
-              changeFilter('currentCategory', category)
+              dispatch(setFilters({ key: 'category', value: category }))
             }
           />
         </Slider>
@@ -29,7 +32,9 @@ const NewsFilters = ({ filters, changeFilter }: Props) => {
 
       <Search
         keywords={filters.keywords}
-        setKeywords={(keywords) => changeFilter('keywords', keywords)}
+        setKeywords={(keywords) =>
+          dispatch(setFilters({ key: 'keywords', value: keywords }))
+        }
       />
     </div>
   )
