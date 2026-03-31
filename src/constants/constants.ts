@@ -9,5 +9,3 @@ export const CATEGORIES: CategoriesType[] = [
   'sports',
   'technology',
 ] as const
-
-export const PAGE_SIZE = 10

@@ -1,6 +1,8 @@
 import { ThemeProvider } from '@/context/ThemeContext.tsx'
+import { store } from '@/store'
 
 import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux'
 
 import App from './App.tsx'
 import './globals.css'
@@ -16,6 +18,8 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <ThemeProvider>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </ThemeProvider>,
 )

@@ -12,8 +12,8 @@ interface Props {
 const NewsList = ({ articles }: Props) => {
   return (
     <ul className={styles.list}>
-      {articles?.map((article) => (
-        <NewsItem key={article.id} item={article} />
+      {articles?.map((article, index) => (
+        <NewsItem key={index} item={article} />
       ))}
     </ul>
   )
