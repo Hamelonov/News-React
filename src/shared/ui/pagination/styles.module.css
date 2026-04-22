@@ -1,0 +1,43 @@
+.pagination {
+  display: flex;
+  width: 100%;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
+}
+
+.arrow,
+.pageNumber {
+  border: none;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.arrow:disabled,
+.pageNumber:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.arrow:not(:disabled),
+.pageNumber:not(:disabled) {
+  cursor: pointer;
+}
+
+.pageNumber {
+  padding: 8px;
+}
+
+.pageNumber:hover:not(:disabled) {
+  filter: brightness(1.2);
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

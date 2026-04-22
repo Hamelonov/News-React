@@ -1,0 +1,23 @@
+.search {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input::placeholder {
+  color: var(--text-color);
+  opacity: 0.5;
+}

@@ -1,0 +1,17 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 90vh;
+  gap: 32px;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+  position: relative;
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+.section::-webkit-scrollbar {
+  display: none;
+}
