@@ -1,16 +1,132 @@
-# React + Vite
+# 📰 News React App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Современное приложение для агрегации и чтения новостей, построенное на **React** с архитектурой **Feature-Sliced Design (FSD)**. Поддерживает фильтрацию по категориям, поиск и детальный просмотр статей.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite)
+![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2-764ABC?style=flat-square&logo=redux)
+![FSD](https://img.shields.io/badge/Feature_Sliced_Design-2-FF6633?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📋 Содержание
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [Демо](#-демо)
+- [Стек технологий](#️-стек-технологий)
+- [Архитектура](#-архитектура-fsd)
+- [Важное ограничение API](#️-важное-ограничение-api)
+- [Запуск проекта](#-запуск-проекта)
+- [Переменные окружения](#-переменные-окружения)
+- [Скрипты](#-скрипты)
+- [Структура проекта](#-структура-проекта)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🌐 Демо
+
+> Приложение доступно только в режиме `localhost` из-за ограничений бесплатного тарифа NewsAPI (подробнее [ниже](#️-важное-ограничение-api)).
+
+---
+
+## 🛠️ Стек технологий
+
+| Технология | Назначение |
+|---|---|
+| **React 18 + Vite** | UI-фреймворк и сборщик |
+| **React Router Dom v6.4+** | Клиентская маршрутизация (Data API) |
+| **Redux Toolkit** | Глобальное управление состоянием |
+| **RTK Query** | Кеширование и fetching данных |
+| **CSS Modules** | Изолированные стили компонентов |
+| **Feature-Sliced Design** | Архитектурная методология |
+
+---
+
+## 🏗 Архитектура FSD
+
+Проект придерживается методологии [Feature-Sliced Design](https://feature-sliced.design/), которая делит кодовую базу на слои с чёткими зонами ответственности:
+
+```
+src/
+├── app/        # Инициализация приложения, глобальные стили, провайдеры
+├── pages/      # Страницы (compositions of widgets)
+├── widgets/    # Самостоятельные блоки интерфейса
+├── features/   # Пользовательские сценарии (поиск, фильтрация)
+├── entities/   # Бизнес-сущности (статья, категория)
+└── shared/     # Переиспользуемые утилиты, UI-кит, константы
+```
+
+---
+
+## ⚠️ Важное ограничение API
+
+В проекте используется **[NewsAPI](https://newsapi.org/)**. Согласно политике **бесплатного тарифа (Developer plan)**:
+
+- ✅ Запросы разрешены **только с `localhost`**
+- ❌ На задеплоенных (продакшн) доменах API вернёт ошибку `426 Upgrade Required`
+
+Если вы хотите задеплоить приложение — потребуется платный тариф или замена на другой провайдер новостей (например, [GNews](https://gnews.io/), [TheGuardian Open Platform](https://open-platform.theguardian.com/)).
+
+---
+
+## 🚀 Запуск проекта
+
+### Предварительные требования
+
+- **Node.js** версии `18+`
+- **npm** или **yarn**
+
+### 1. Клонирование репозитория
+
+```bash
+git clone https://github.com/ВАШ_ЛОГИН/ВАШ_РЕПОЗИТОРИЙ.git
+cd ВАШ_РЕПОЗИТОРИЙ
+```
+
+### 2. Установка зависимостей
+
+```bash
+npm install
+```
+
+### 3. Настройка переменных окружения
+
+Создайте файл `.env` в корне проекта на основе примера:
+
+```bash
+cp .env.example .env
+```
+
+Затем откройте `.env` и вставьте ваш API-ключ (см. [раздел ниже](#-переменные-окружения)).
+
+### 4. Запуск в режиме разработки
+
+```bash
+npm run dev
+```
+
+Приложение будет доступно по адресу: **[http://localhost:5173](http://localhost:5173)**
+
+---
+
+## 🔑 Переменные окружения
+
+Получите бесплатный API-ключ на [newsapi.org](https://newsapi.org/register) и добавьте его в `.env`:
+
+```env
+VITE_NEWS_API_KEY=ваш_ключ_здесь
+```
+
+> ⚠️ Никогда не коммитьте `.env` файл в репозиторий. Убедитесь, что он добавлен в `.gitignore`.
+
+---
+
+## 🤝 Контрибьюция
+
+Pull request'ы приветствуются! Для крупных изменений — сначала откройте Issue для обсуждения.
+
+---
+
+## 📄 Лицензия
+
+Распространяется под лицензией [MIT](LICENSE).

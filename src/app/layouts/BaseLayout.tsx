@@ -1,12 +1,13 @@
-import Main from '@/pages/main/ui/Main.tsx'
 import Header from '@/widgets/header/ui/Header.tsx'
+
+import { Outlet } from 'react-router-dom'
 
 const BaseLayout = () => {
   return (
     <div>
       <Header />
       <div className="container">
-        <Main />
+        <Outlet />
       </div>
     </div>
   )

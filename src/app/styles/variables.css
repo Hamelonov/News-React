@@ -5,6 +5,11 @@
   --text-color: #000000;
   --accent-bg: #e7e7ff;
   --accent-color: #6b4eff;
+
+  --laptop: 1400px;
+  --tablet: 1024px;
+  --mobile: 768px;
+  --mobile-s: 480px;
 }
 
 [data-theme='dark'] {

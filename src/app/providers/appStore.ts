@@ -1,8 +1,9 @@
-import { rootReducer } from '@/app/appReducers.ts'
-import { newsApi } from '@/entities/news/api/newsApi.ts'
+import { rootReducer } from '@/app/providers/appReducers.ts'
 import { configureStore } from '@reduxjs/toolkit'
 
 import { useDispatch, useSelector } from 'react-redux'
+
+import { newsApi } from '@/entities/news/api/newsApi.ts'
 
 export const store = configureStore({
   reducer: rootReducer,
