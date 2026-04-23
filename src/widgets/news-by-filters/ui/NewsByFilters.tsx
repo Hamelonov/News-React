@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/app/appStore.ts'
+import { useAppDispatch, useAppSelector } from '@/app/providers/appStore.ts'
 import { NewsItemsList, useGetNewsFromTopHeadlinesQuery } from '@/entities/news'
 import { setFilters } from '@/entities/news/model/newsSlice.ts'
 import Search from '@/features/search'

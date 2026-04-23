@@ -1,8 +1,9 @@
-import { store } from '@/app/appStore.ts'
-import BaseLayout from '@/app/layouts/BaseLayout.tsx'
 import { ThemeProvider } from '@/app/providers/ThemeProvider.tsx'
+import { appRouter } from '@/app/providers/appRouter.tsx'
+import { store } from '@/app/providers/appStore.ts'
 
 import { Provider } from 'react-redux'
+import { RouterProvider } from 'react-router-dom'
 
 import './styles/globals.css'
 import './styles/reset.css'
@@ -12,7 +13,7 @@ const App = () => {
   return (
     <ThemeProvider>
       <Provider store={store}>
-        <BaseLayout />
+        <RouterProvider router={appRouter} />
       </Provider>
     </ThemeProvider>
   )
