@@ -1,0 +1,37 @@
+.header {
+  width: 100%;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-size: 28px;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.date {
+  font-size: 16px;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.themeButton {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.themeButton:hover {
+  transform: scale(1.1);
+}

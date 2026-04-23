@@ -1,0 +1,16 @@
+:root {
+  --bg-color: #ffffff;
+  --bg-secondary: #f2f4f5;
+  --border-color: #f2f3f5;
+  --text-color: #000000;
+  --accent-bg: #e7e7ff;
+  --accent-color: #6b4eff;
+}
+
+[data-theme='dark'] {
+  --bg-color: #23272f;
+  --bg-secondary: #3e4451;
+  --text-color: #f6f7f9;
+  --accent-bg: #312e81;
+  --accent-color: #a5b4fc;
+}
